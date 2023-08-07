@@ -26,12 +26,10 @@ public class NotificationServiceImpl implements NotificationService {
         long oneHourAgo = currentTime - TimeUnit.HOURS.toMillis(1);
         long oneDayAgo = currentTime - TimeUnit.DAYS.toMillis(1);
 
-        // Check and update rate limits in Redis
         long minuteCount = redisTemplate.opsForZSet().count(key, oneMinuteAgo, currentTime);
         long hourCount = redisTemplate.opsForZSet().count(key, oneHourAgo, currentTime);
         long dayCount = redisTemplate.opsForZSet().count(key, oneDayAgo, currentTime);
 
-        // Apply rate limits
         if (minuteCount >= 2) {
             throw new TooManyRequestsException("Rate limit exceeded: Maximum 2 per minute allowed.");
         }
@@ -42,10 +40,8 @@ public class NotificationServiceImpl implements NotificationService {
             throw new TooManyRequestsException("Rate limit exceeded: Maximum 3 per hour allowed for marketing.");
         }
 
-        // Send the notification
         gatewayService.send(userId, message);
 
-        // Update Redis with the timestamp of the sent notification
         redisTemplate.opsForZSet().add(key, currentTime, currentTime);
     }
 }

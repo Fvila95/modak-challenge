@@ -18,8 +18,8 @@ public class RedisConfig {
     @Bean
     public JedisConnectionFactory jedisConnectionFactory() {
         RedisStandaloneConfiguration config = new RedisStandaloneConfiguration();
-        config.setHostName(host); // Replace with your Redis server host
-        config.setPort(port); // Replace with your Redis server port
+        config.setHostName(host);
+        config.setPort(port);
         return new JedisConnectionFactory(config);
     }
 
