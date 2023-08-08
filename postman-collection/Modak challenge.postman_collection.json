@@ -1,0 +1,38 @@
+{
+	"info": {
+		"_postman_id": "1f693ab6-9708-46c5-836a-797d65219df4",
+		"name": "Modak challenge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Send notification",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"type\": \"status\",\n    \"userId\": \"user1\",\n    \"message\": \"Hello!\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/modak-challenge/notifications",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"modak-challenge",
+						"notifications"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
