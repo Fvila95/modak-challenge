@@ -38,10 +38,6 @@ public class NotificationServiceImpl implements NotificationService {
         redisTemplate.opsForZSet().add(key, currentTime, currentTime);
     }
 
-    private long getMessageCountForType(String key, long startTime, long endTime) {
-        return redisTemplate.opsForZSet().count(key, startTime, endTime);
-    }
-
     private void validateRateLimit(String type, String userId) throws TooManyRequestsException {
         long currentTime = System.currentTimeMillis();
         String key = type + ":" + userId;
@@ -60,5 +56,9 @@ public class NotificationServiceImpl implements NotificationService {
             throw new TooManyRequestsException("Rate limit exceeded: Maximum " + rule.limit() + " requests per " +
                     rule.timeWindowInMillis() + " ms allowed for " + rule.type() + " notifications.");
         }
+    }
+
+    private long getMessageCountForType(String key, long startTime, long endTime) {
+        return redisTemplate.opsForZSet().count(key, startTime, endTime);
     }
 }
